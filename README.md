@@ -1,3 +1,3 @@
 # programs
 
-Some practiced programs
+Some of the practiced programs.
