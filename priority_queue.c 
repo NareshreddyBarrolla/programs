@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int value;
+	int priority;
+	struct node *next;
+};
+
+struct node *root = NULL,*current;
+struct node *temp;
+
+/*struct node *create(int value,int priority){
+	temp = (struct node*)malloc(sizeof(struct node));
+	temp->value = value;
+	temp->priority = priority;
+	temp->next = NULL;
+	return temp;
+}*/
+
+void insert(){
+
+	int value,priority;
+
+	printf("Enter Value \t");
+	scanf("%d",&value);
+	printf("Enter Priority \t");
+	scanf("%d",&priority);
+	
+	if(root == NULL){
+		temp = (struct node*)malloc(sizeof(struct node));
+		temp->value = value;
+		temp->priority = priority;
+		temp->next = NULL;
+		root = temp;
+		current = temp;
+	}
+	if(root->next == NULL && priority < root->priority){	
+			temp = (struct node*)malloc(sizeof(struct node));
+			temp->value = value;
+			temp->priority = priority;
+			temp->next = root;
+			current = root;			
+			root = temp;			
+			
+	}
+	if(root->next != NULL){
+			// it means more then two nodes		
+			struct node *f=root,*n=root->next;
+			if( priority < root->priority ){
+				temp = (struct node*)malloc(sizeof(struct node));
+				temp->value = value;
+				temp->priority = priority;
+				temp->next = root;
+				current = root;			
+				root = temp;	
+			}			
+			if(priority > f->priority && priority < n->priority){
+					temp = (struct node*)malloc(sizeof(struct node));
+					temp->value = value;
+					temp->priority = priority;
+					f->next = temp;
+					temp->next = n;
+					current = temp;
+			}else{
+				f = n;
+				n = f->next;
+			}
+			
+			
+	}
+}
+
+void display(){
+	struct node *temp = root;
+	while(temp != NULL){
+		printf("Value : %d \t Priority : %d \n",temp->value,temp->priority);
+		temp = temp->next;
+	}
+}
+void main(){
+	int ch;
+	while(1){
+		printf("1.Insert \t 2.Display \t 3.Exit \n");
+		printf("Enter your choice \n");
+		scanf("%d",&ch);
+		switch(ch){
+			case 1:
+				insert();
+				break;
+			case 2:
+				display();
+				break;
+			case 3:
+				exit(0);
+			default:
+				printf("You chosen wrong option \n");
+		}
+	}
+}
